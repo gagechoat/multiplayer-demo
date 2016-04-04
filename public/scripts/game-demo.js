@@ -62,31 +62,35 @@ function update () {
     player2.body.velocity.x = 0;
 
     // player 1
-    if (cursors.left.isDown)
+    //if (cursors.left.isDown)
+    if ( socketIsDown(37) )
     {
         player.body.velocity.x = -250;
     }
-    else if (cursors.right.isDown)
+    //else if (cursors.right.isDown)
+    else if ( socketIsDown(39) )
     {
         player.body.velocity.x = 250;
     }
-
-    if (jumpButton.isDown && (player.body.onFloor() || player.body.touching.down))
+    //if (jumpButton.isDown && (player.body.onFloor() || player.body.touching.down))
+    if ( socketIsDown(13) )
     {
         player.body.velocity.y = -400;
     }
 
     // player 2
-    if (cursors2.left.isDown)
+    //if (cursors2.left.isDown)
+    if ( socketIsDown(74) )
     {
         player2.body.velocity.x = -250;
     }
-    else if (cursors2.right.isDown)
+    //else if (cursors2.right.isDown)
+    else if ( socketIsDown(76) )
     {
         player2.body.velocity.x = 250;
     }
-
-    if (jumpButton2.isDown && (player2.body.onFloor() || player2.body.touching.down))
+    //if (jumpButton2.isDown && (player2.body.onFloor() || player2.body.touching.down))
+    if ( socketIsDown(73) && ( player2.body.onFloor() || player2.body.touching.down ) )
     {
         player2.body.velocity.y = -400;
     }
