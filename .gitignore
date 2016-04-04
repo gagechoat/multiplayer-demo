@@ -1,0 +1,23 @@
+# os
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# server
+*.log
+error_log
+log
+
+# git
+.gitconfig
+README.md
+
+# grunt
+node_modules
+.tmp
+.sass-cache
+bower_components
