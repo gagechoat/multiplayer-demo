@@ -16,7 +16,7 @@ io.on('connection', function(socket){
   socket.on('key-down', function( response ) {
     //eventIds.push(response.id);
     //if ( eventIds.indexOf(response.id) === -1 ) {
-      eventIds.push( response.id );
+      //eventIds.push( response.id );
       io.emit('key-down', response);
       console.log('key down:'); console.dir(response);
     //}
