@@ -3,8 +3,6 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-//var eventIds = [];
-
 app.use(express.static('public'));
 
 io.on('connection', function(socket){
@@ -14,19 +12,12 @@ io.on('connection', function(socket){
   });
 
   socket.on('key-down', function( response ) {
-    //eventIds.push(response.id);
-    //if ( eventIds.indexOf(response.id) === -1 ) {
-      //eventIds.push( response.id );
-      io.emit('key-down', response);
-      console.log('key down:'); console.dir(response);
-    //}
+    io.emit('key-down', response);
+    //console.log('key down:'); console.dir(response);
   });
   socket.on('key-up', function( response ){
-    //if ( eventIds.indexOf(response.id) === -1 ) {
-      //eventIds.push( response.id );
-      io.emit('key-up', response);
-      console.log('key up:'); console.dir(response);
-    //}
+    io.emit('key-up', response);
+    //console.log('key up:'); console.dir(response);
   });
 });
 

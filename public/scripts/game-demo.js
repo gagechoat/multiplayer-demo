@@ -14,7 +14,7 @@ function preload() {
 
 var playerDefaults = {
   jump: 400,
-  gravity: 750,
+  gravity: 450,
   speed: 250,
   y: 200
 };
