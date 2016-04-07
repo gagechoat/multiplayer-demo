@@ -12,25 +12,46 @@ function preload() {
 
 }
 
-var player;
-var player2;
+var player = [
+    {
+      x: 100,
+      y: 200,
+      keys: {
+        left: 65,
+        right: 68,
+        jump: 87
+      }
+    },
+    {
+      x: 400,
+      y: 200,
+      keys: {
+        left: 74,
+        right: 76,
+        jump: 73
+      }
+    },
+    {
+      x: 700,
+      y: 200,
+      keys: {
+        left: 37,
+        right: 39,
+        jump: 38
+      }
+    }
+]
 var platforms;
 var cursors;
 var jumpButton;
 
 function create() {
-
-    player = game.add.sprite(100, 200, 'player');
-    player2 = game.add.sprite(400, 200, 'player');
-
-    game.physics.arcade.enable(player);
-    game.physics.arcade.enable(player2);
-
-    player.body.collideWorldBounds = true;
-    player.body.gravity.y = 500;
-
-    player2.body.collideWorldBounds = true;
-    player2.body.gravity.y = 500;
+    for ( var i = 0; i < player.length; i++) {
+      player[i].sprite = game.add.sprite( player[i].x, player[i].y, 'player' );
+      game.physics.arcade.enable( player[i].sprite );
+      player[i].sprite.body.collideWorldBounds = true;
+      player[i].sprite.body.gravity.y = 750;
+    }
 
     platforms = game.add.physicsGroup();
 
@@ -39,59 +60,25 @@ function create() {
     platforms.create(400, 450, 'platform');
 
     platforms.setAll('body.immovable', true);
-
-    cursors = game.input.keyboard.createCursorKeys();
-    jumpButton = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-
-    cursors2 = {
-      left: game.input.keyboard.addKey(Phaser.Keyboard.J),
-      right: game.input.keyboard.addKey(Phaser.Keyboard.L)
-      //right: game.input.keyboard.addKey( 76 )
-    };
-    jumpButton2 = game.input.keyboard.addKey(Phaser.Keyboard.I);
-
 }
 
 function update () {
+    for ( var i = 0; i < player.length; i++) {
+      game.physics.arcade.collide( player[i].sprite, platforms );
+      for ( var j = player.length - 1; j > i; j-- ) {
+        game.physics.arcade.collide( player[i].sprite, player[j].sprite );
+      }
 
-    game.physics.arcade.collide(player, platforms);
-    game.physics.arcade.collide(player2, platforms);
-    game.physics.arcade.collide(player, player2);
+      player[i].sprite.body.velocity.x = 0
 
-    player.body.velocity.x = 0;
-    player2.body.velocity.x = 0;
+      if ( isKeyDown( player[i].keys.left ) ) {
+        player[i].sprite.body.velocity.x = -250;
+      } else if ( isKeyDown( player[i].keys.right ) ) {
+        player[i].sprite.body.velocity.x = 250;
+      }
 
-    // player 1
-    //if (cursors.left.isDown)
-    if ( isKeyDown(37) )
-    {
-        player.body.velocity.x = -250;
-    }
-    //else if (cursors.right.isDown)
-    else if ( isKeyDown(39) )
-    {
-        player.body.velocity.x = 250;
-    }
-    //if (jumpButton.isDown && (player.body.onFloor() || player.body.touching.down))
-    if ( isKeyDown(38) )
-    {
-        player.body.velocity.y = -400;
-    }
-
-    // player 2
-    //if (cursors2.left.isDown)
-    if ( isKeyDown(74) )
-    {
-        player2.body.velocity.x = -250;
-    }
-    //else if (cursors2.right.isDown)
-    else if ( isKeyDown(76) )
-    {
-        player2.body.velocity.x = 250;
-    }
-    //if (jumpButton2.isDown && (player2.body.onFloor() || player2.body.touching.down))
-    if ( isKeyDown(73) && ( player2.body.onFloor() || player2.body.touching.down ) )
-    {
-        player2.body.velocity.y = -400;
+      if ( isKeyDown( player[i].keys.jump )  && ( player[i].sprite.body.onFloor() || player[i].sprite.body.touching.down ) ) {
+        player[i].sprite.body.velocity.y = -400;
+      }
     }
 }
